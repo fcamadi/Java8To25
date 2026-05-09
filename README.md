@@ -2,6 +2,8 @@
 
 A comprehensive project demonstrating Java features from version 8 through 25, covering all major LTS releases (11, 17, 21, 25) and intermediate versions.
 
+ *** Using opencode ***
+
 ## Project Overview
 
 This project provides practical code examples for the most important Java features introduced from Java 8 to Java 25. Each version has dedicated documentation and working code samples.
