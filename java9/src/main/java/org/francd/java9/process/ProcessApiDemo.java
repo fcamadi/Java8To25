@@ -3,6 +3,7 @@ package org.francd.java9.process;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProcessApiDemo {
 
@@ -38,7 +39,7 @@ public class ProcessApiDemo {
 
         List<ProcessHandle> allProcesses = ProcessHandle.allProcesses()
             .limit(10)
-            .toList();
+                .collect(Collectors.toList());
 
         System.out.println("First 10 processes:");
         for (ProcessHandle ph : allProcesses) {

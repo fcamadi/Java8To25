@@ -1,4 +1,8 @@
 module org.francd.java9 {
+    uses org.francd.java9.modules.MessageFormatter;
+    provides org.francd.java9.modules.MessageFormatter with
+        org.francd.java9.modules.JsonFormatter,
+        org.francd.java9.modules.XmlFormatter;
     requires java.base;
 
     exports org.francd.java9.modules;

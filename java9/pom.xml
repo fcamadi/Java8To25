@@ -18,4 +18,17 @@
         <maven.compiler.target>9</maven.compiler.target>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <mainClass>org.francd.java9.modules.ModulesDemo</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

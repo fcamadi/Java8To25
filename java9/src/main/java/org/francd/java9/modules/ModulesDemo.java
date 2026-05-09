@@ -15,24 +15,25 @@ public class ModulesDemo {
     private static void moduleInfoExample() {
         System.out.println("=== Module System (Java 9) ===");
 
-        Module coreModule = ModuleLayer.boot()
-            .findModule("java.base")
-            .orElseThrow();
+        Optional<Module> coreModule = Optional.of(ModuleLayer.boot()
+                .findModule("java.base").orElseThrow(RuntimeException::new));
 
-        System.out.println("Module name: " + coreModule.getName());
-        System.out.println("Module version: " + coreModule.getDescriptor().rawVersion().orElse("none"));
-        System.out.println("Is modular: " + coreModule.isNamed());
+        System.out.println("Module name: " + coreModule.get().getName());
+        System.out.println("Module version: " + coreModule.get().getDescriptor().rawVersion().orElse("none"));
+        System.out.println("Is modular: " + coreModule.get().isNamed());
 
-        Set<String> packages = coreModule.getPackages();
+        Set<String> packages = coreModule.get().getPackages();
         System.out.println("Number of packages: " + packages.size());
 
-        ModuleDescriptor descriptor = coreModule.getDescriptor();
+        ModuleDescriptor descriptor = coreModule.get().getDescriptor();
         System.out.println("Module descriptor: " + descriptor.name());
 
         if (!descriptor.exports().isEmpty()) {
             System.out.println("Some exports: " +
-                descriptor.exports().stream().limit(3).map(ModuleDescriptor.Exports::source)
-                    .toList());
+                descriptor.exports().stream()
+                        .limit(3)
+                        .map(ModuleDescriptor.Exports::source)
+                        .collect(Collectors.toList()));
         }
     }
 
@@ -46,12 +47,20 @@ public class ModulesDemo {
         System.out.println("Is module named: " + currentModule.isNamed());
 
         System.out.println("Can read module: " + currentModule.canRead(coreModule()));
-        System.out.println("Is module open: " + currentModule.isOpen(currentModule.getName()));
+        if (currentModule.isNamed()) {
+            System.out.println("Is module open: " + currentModule.isOpen(currentModule.getName()));
+        } else {
+            System.out.println("Is module open: N/A (unnamed module)");
+        }
 
-        List<? extends Class<? extends String>> packages = currentModule.getPackages().stream()
-            .map(String::getClass)
-            .toList();
-        System.out.println("packages: " + packages.size());
+        if (currentModule.isNamed()) {
+            List<? extends Class<? extends String>> packages = currentModule.getPackages().stream()
+                .map(String::getClass)
+                    .collect(Collectors.toList());
+            System.out.println("packages: " + packages.size());
+        } else {
+            System.out.println("packages: N/A (unnamed module)");
+        }
 
         Class<?> stringClass = String.class;
         Module stringModule = stringClass.getModule();
@@ -73,24 +82,7 @@ public class ModulesDemo {
     }
 
     private static Module coreModule() {
-        return ModuleLayer.boot().findModule("java.base").orElseThrow();
+        return ModuleLayer.boot().findModule("java.base").orElseThrow(RuntimeException::new);
     }
 }
 
-interface MessageFormatter {
-    String format(String message);
-}
-
-class JsonFormatter implements MessageFormatter {
-    @Override
-    public String format(String message) {
-        return "{\"message\": \"" + message + "\"}";
-    }
-}
-
-class XmlFormatter implements MessageFormatter {
-    @Override
-    public String format(String message) {
-        return "<message>" + message + "</message>";
-    }
-}
