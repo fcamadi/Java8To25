@@ -66,7 +66,7 @@ public class BuiltInFunctionalInterfaces {
     private static void supplierConsumerDemo() {
         System.out.println("\n=== Supplier & Consumer ===");
 
-        Supplier<Double> random = () -> Math.random();
+        Supplier<Double> random = Math::random;
         System.out.println("Random: " + random.get());
 
         Supplier<String> currentTime = () -> java.time.LocalTime.now().toString();
@@ -117,9 +117,11 @@ public class BuiltInFunctionalInterfaces {
 
         IntPredicate even = n -> n % 2 == 0;
         System.out.println("IntPredicate 4: " + even.test(4));
+        System.out.println("IntPredicate 5: " + even.test(5));
 
         LongPredicate large = l -> l > 1000;
         System.out.println("LongPredicate 5000: " + large.test(5000));
+        System.out.println("LongPredicate 50: " + large.test(50));
 
         DoublePredicate positive = d -> d > 0;
         System.out.println("DoublePredicate -5: " + positive.test(-5));

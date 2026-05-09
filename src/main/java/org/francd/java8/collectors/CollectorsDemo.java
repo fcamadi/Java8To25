@@ -5,6 +5,14 @@ import java.util.stream.Collectors;
 
 public class CollectorsDemo {
 
+    private static final List<Product> products = Arrays.asList(
+            new Product("Laptop", "Electronics", 1200),
+            new Product("Phone", "Electronics", 800),
+            new Product("Shirt", "Clothing", 50),
+            new Product("Pants", "Clothing", 80),
+            new Product("Table", "Furniture", 500)
+    );
+
     public static void main(String[] args) {
         basicCollectors();
         groupingAndPartitioning();
@@ -43,15 +51,6 @@ public class CollectorsDemo {
     private static void groupingAndPartitioning() {
         System.out.println("\n=== Grouping and Partitioning ===");
 
-        List<Product> products = Arrays.asList(
-            new Product("Laptop", "Electronics", 1200),
-            new Product("Phone", "Electronics", 800),
-            new Product("Shirt", "Clothing", 50),
-            new Product("Pants", "Clothing", 80),
-            new Product("Table", "Furniture", 500),
-            new Product("Chair", "Furniture", 200)
-        );
-
         Map<String, List<Product>> byCategory = products.stream()
             .collect(Collectors.groupingBy(Product::getCategory));
         System.out.println("GroupingBy:");
@@ -86,13 +85,17 @@ public class CollectorsDemo {
 
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-        Long count = numbers.stream().collect(Collectors.counting());
+        //Typical AI garbage:
+        //Long count = numbers.stream().collect(Collectors.counting());
+        long count = numbers.size();
         System.out.println("Counting: " + count);
 
-        Optional<Integer> min = numbers.stream().collect(Collectors.minBy(Integer::compare));
+        //Optional<Integer> min = numbers.stream().collect(Collectors.minBy(Integer::compare));
+        Optional<Integer> min = numbers.stream().min(Integer::compare);
         System.out.println("Min: " + min.orElse(0));
 
-        Optional<Integer> max = numbers.stream().collect(Collectors.maxBy(Integer::compare));
+        //Optional<Integer> max = numbers.stream().collect(Collectors.maxBy(Integer::compare));
+        Optional<Integer> max = numbers.stream().max(Integer::compare);
         System.out.println("Max: " + max.orElse(0));
 
         Double average = numbers.stream().collect(Collectors.averagingDouble(n -> n));
@@ -101,27 +104,20 @@ public class CollectorsDemo {
         IntSummaryStatistics stats = numbers.stream().collect(Collectors.summarizingInt(n -> n));
         System.out.println("Summarizing: " + stats);
 
-        Optional<Integer> reduced = numbers.stream()
-            .collect(Collectors.reducing(Integer::sum));
+        //Optional<Integer> reduced = numbers.stream().collect(Collectors.reducing(Integer::sum));
+        Optional<Integer> reduced = numbers.stream().reduce(Integer::sum);
         System.out.println("Reducing: " + reduced.orElse(0));
 
-        Integer summed = numbers.stream().collect(Collectors.reducing(0, n -> n, Integer::sum));
+        //Integer summed = numbers.stream().collect(Collectors.reducing(0, n -> n, Integer::sum));
+        Integer summed = numbers.stream().reduce(0, Integer::sum);
         System.out.println("Reducing with identity: " + summed);
     }
 
     private static void downstreamCollectors() {
         System.out.println("\n=== Downstream Collectors ===");
 
-        List<Product> products = Arrays.asList(
-            new Product("Laptop", "Electronics", 1200),
-            new Product("Phone", "Electronics", 800),
-            new Product("Shirt", "Clothing", 50),
-            new Product("Pants", "Clothing", 80),
-            new Product("Table", "Furniture", 500)
-        );
-
-        Set<String> categories = products.stream()
-            .collect(Collectors.mapping(Product::getCategory, Collectors.toSet()));
+        //Set<String> categories = products.stream().collect(Collectors.mapping(Product::getCategory, Collectors.toSet()));
+        Set<String> categories = products.stream().map(Product::getCategory).collect(Collectors.toSet());
         System.out.println("Mapping to Set: " + categories);
 
         Set<String> categorySet = products.stream()
@@ -151,6 +147,7 @@ public class CollectorsDemo {
         System.out.println("Cheapest by category: " + cheapestByCategory);
     }
 
+    //It could be a Record, but this is "Java 8"
     static class Product {
         private final String name;
         private final String category;

@@ -25,10 +25,11 @@ public class OptionalDemo {
         Optional<String> of = Optional.of("Hello");
         System.out.println("Of: " + of.get());
 
-        Optional<String> ofNullable = Optional.ofNullable(null);
+        String nada = null;
+        Optional<String> ofNullable = Optional.ofNullable(nada);
         System.out.println("OfNullable (null): " + ofNullable.isPresent());
 
-        Optional<String> ofNullable2 = Optional.ofNullable("World");
+        Optional<String> ofNullable2 = Optional.of("World");
         System.out.println("OfNullable (value): " + ofNullable2.isPresent());
     }
 
@@ -154,6 +155,6 @@ public class OptionalDemo {
     }
 
     static class Address {
-        String getCity() { return "Madrid"; }
+        String getCity() { return "Gijón"; }
     }
 }

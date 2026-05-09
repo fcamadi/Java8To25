@@ -21,7 +21,8 @@ public class StreamApiDemo {
         System.out.println();
 
         List<String> list = Arrays.asList("one", "two", "three");
-        list.stream().forEach(System.out::print);
+        //list.stream().forEach(System.out::print); <- not really needed for this
+        list.forEach(System.out::print);
         System.out.println();
 
         Stream<Integer> fromIterator = Stream.iterate(1, n -> n + 2).limit(5);
@@ -29,9 +30,9 @@ public class StreamApiDemo {
         fromIterator.forEach(s -> System.out.print(s + " "));
         System.out.println();
 
-        Stream<Double> random = Stream.generate(Math::random).limit(3);
+        Stream<Double> random = Stream.generate(Math::random).limit(10);
         System.out.print("Random: ");
-        random.forEach(s -> System.out.print(String.format("%.2f ", s)));
+        random.forEach(s -> System.out.printf("%.2f ", s));
         System.out.println();
 
         Stream<String> empty = Stream.empty();
@@ -56,11 +57,6 @@ public class StreamApiDemo {
         words.stream()
             .map(String::toUpperCase)
             .forEach(s -> System.out.print("Map: " + s + " "));
-        System.out.println();
-
-        words.stream()
-            .flatMap(s -> Stream.of(s.split("")))
-            .forEach(s -> System.out.print("FlatMap: " + s));
         System.out.println();
 
         words.stream()
@@ -129,7 +125,8 @@ public class StreamApiDemo {
         String concat = names().stream().reduce("", String::concat);
         System.out.println("Reduce concat: " + concat);
 
-        String joined = names().stream().collect(Collectors.joining(", "));
+        //String joined = names().stream().collect(Collectors.joining(", "));
+        String joined = String.join(", ", names());
         System.out.println("Joining: " + joined);
 
         Map<Integer, List<String>> grouped = names().stream()
@@ -144,7 +141,7 @@ public class StreamApiDemo {
     private static void parallelStreams() {
         System.out.println("\n=== Parallel Streams ===");
 
-        List<Integer> largeList = IntStream.range(1, 1001).boxed().collect(Collectors.toList());
+        List<Integer> largeList = IntStream.range(1, 100000001).boxed().toList();
 
         long start = System.currentTimeMillis();
         long sequentialSum = largeList.stream()
