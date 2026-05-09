@@ -70,21 +70,30 @@ public class ProcessApiDemo {
         System.out.println("RedirectError: " + pb.redirectError());
         System.out.println("RedirectInput: " + pb.redirectInput());
 
+        //bash example
         pb = new ProcessBuilder()
-            .command("echo", "Hello from Java 9 Process API")
-            .directory(new java.io.File("."))
-            .inheritIO();
+            //.command("echo", "Hello from Java 9 Process API")
+            .command("ls", "-latr")
+            .directory(new java.io.File("/home/francd/snap"));
+            //.inheritIO();  <- or this
 
         try {
-            Process process = pb.start();
-            int exitCode = process.waitFor();
+            Process p = pb.start();
+            int exitCode = p.waitFor();
+
+            String output = new String(p.getInputStream().readAllBytes());  // or this
+            System.out.println("ls -latr output:\n" + output);
             System.out.println("Exit code: " + exitCode);
         } catch (Exception e) {
             System.out.println("Process error: " + e.getMessage());
         }
 
+        System.out.println("\n-----------------------------------------------------------\n");
+
+        // Calling Java from Java example
+        String javaPath = System.getProperty("java.home") + "/bin/java";
         pb = new ProcessBuilder()
-            .command("java", "-version")
+            .command(javaPath, "--version")
             .redirectErrorStream(true);
 
         try {
