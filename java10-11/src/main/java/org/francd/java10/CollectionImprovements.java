@@ -1,6 +1,7 @@
 package org.francd.java10;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CollectionImprovements {
 
@@ -98,7 +99,7 @@ public class CollectionImprovements {
 
         List<String> collected = optionals.stream()
             .flatMap(Optional::stream)
-            .toList();
+                .collect(Collectors.toList());
         System.out.println("Flattened optionals: " + collected);
 
         // ifPresentOrElse

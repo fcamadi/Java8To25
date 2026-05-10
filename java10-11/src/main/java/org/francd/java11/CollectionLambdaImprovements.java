@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CollectionLambdaImprovements {
 
@@ -50,26 +51,26 @@ public class CollectionLambdaImprovements {
         List<String> shortWords = words.stream()
             .filter(s -> !s.isEmpty())  // negate
             .filter(s -> s.length() < 6)
-            .toList();
+                .collect(Collectors.toList());
         System.out.println("Short words (old): " + shortWords);
 
         // Java 11 - use Predicate.not()
         List<String> notEmpty = words.stream()
             .filter(Predicate.not(String::isEmpty))
-            .toList();
+                .collect(Collectors.toList());
         System.out.println("Not empty: " + notEmpty);
 
         // with method reference
         List<String> nonNulls = words.stream()
             .filter(Predicate.not(Objects::isNull))
-            .toList();
+                .collect(Collectors.toList());
         System.out.println("Not null: " + nonNulls);
 
         // Combined with other predicates
         List<String> result = words.stream()
             .filter(Predicate.not(String::isBlank))
             .filter(Predicate.not(s -> s.length() > 5))
-            .toList();
+                .collect(Collectors.toList());
         System.out.println("Filtered: " + result);
 
         // Predicate.not() is useful for negating method references

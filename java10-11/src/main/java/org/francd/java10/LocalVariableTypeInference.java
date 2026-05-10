@@ -1,6 +1,7 @@
 package org.francd.java10;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LocalVariableTypeInference {
 
@@ -142,7 +143,7 @@ public class LocalVariableTypeInference {
 
         var doubled = nums.stream()
             .map(x -> x * 2) // var requires explicit type in lambda
-            .toList();
+            .collect(Collectors.toList());
         System.out.println("Doubled: " + doubled);
     }
 

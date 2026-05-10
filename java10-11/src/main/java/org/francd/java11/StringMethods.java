@@ -74,24 +74,24 @@ public class StringMethods {
         String star = "*".repeat(10);
         System.out.println("Stars: " + star);
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (int i = 1; i <= 5; i++) {
             buffer.append("*".repeat(i)).append("\n");
         }
         System.out.println("Triangle:\n" + buffer);
 
-        // indent() - adds indentation
+        // indent() - adds indentation            <- indent comes in Java 12
         String text = "Line 1\nLine 2\nLine 3";
-        String indented = text.indent(4);
-        System.out.println("Indented:\n" + indented);
+        //String indented = text.indent(4);
+        //System.out.println("Indented:\n" + indented);
 
         // Negative indent - removes leading whitespace
         String overIndented = "    Indented text";
-        String unindented = overIndented.indent(-4);
-        System.out.println("Unindented: '" + unindented + "'");
+        //String unindented = overIndented.indent(-4);
+        //System.out.println("Unindented: '" + unindented + "'");
 
         // Combining indent and repeat
-        String formatted = "Hello".indent(2).repeat(3);
-        System.out.println("Formatted:\n" + formatted);
+        //String formatted = "Hello".indent(2).repeat(3);
+        //System.out.println("Formatted:\n" + formatted);
     }
 }
