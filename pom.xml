@@ -15,11 +15,11 @@
     <modules>
         <module>java8</module>
         <module>java9</module>
-        <module>java10-11</module>
+        <module>java11</module>
         <module>java12-16</module>
         <module>java17</module>
-        <module>java18-21</module>
-        <module>java22-25</module>
+        <module>java21</module>
+        <module>java25</module>
     </modules>
 
     <properties>
