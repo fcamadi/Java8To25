@@ -1,22 +1,27 @@
 package org.francd.java12;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.DayOfWeek;
 import java.time.Month;
 
 public class SwitchExpressions {
 
     public static void main(String[] args) {
-        traditionalSwitch();
-        newSwitchExpression();
+        try {
+            traditionalSwitch(SecureRandom.getInstanceStrong().nextInt(7));
+            newSwitchExpression(SecureRandom.getInstanceStrong().nextInt(7));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
         switchWithArrow();
         switchWithMultipleValues();
         switchWithBlock();
     }
 
-    private static void traditionalSwitch() {
+    private static void traditionalSwitch(int day) {
         System.out.println("=== Traditional Switch ===");
 
-        int day = 3;
         String dayName;
 
         switch (day) {
@@ -41,10 +46,8 @@ public class SwitchExpressions {
         System.out.println("Traditional: " + dayName);
     }
 
-    private static void newSwitchExpression() {
+    private static void newSwitchExpression(int day) {
         System.out.println("\n=== Switch Expression (Java 12+) ===");
-
-        int day = 3;
 
         // Expression form - returns a value
         String dayName = switch (day) {

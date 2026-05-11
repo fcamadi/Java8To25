@@ -25,8 +25,8 @@ public class RecordsPatternMatching {
 
         // Records in collections
         var people = java.util.List.of(
-            new Person("Alice", 25),
-            new Person("Bob", 30)
+                new Person("Alice", 25),
+                new Person("Bob", 30)
         );
         people.forEach(p -> System.out.println(p.name()));
     }
@@ -53,12 +53,15 @@ public class RecordsPatternMatching {
             System.out.println("Integer value: " + i);
         }
 
-        // With multiple conditions
-        if (obj1 instanceof String s && s.length() > 3) {
-            System.out.println("Long string: " + s);
+        // With conditions - need separate check for Java 14
+        if (obj1 instanceof String s) {
+            if (s.length() > 3) {
+                System.out.println("Long string: " + s);
+            }
         }
 
         // In switch (Java 17+)
+        /* this is JAva 14 !!
         Object value = "test";
         String result = switch (value) {
             case String s -> "String: " + s;
@@ -66,6 +69,7 @@ public class RecordsPatternMatching {
             default -> "Unknown";
         };
         System.out.println("Switch result: " + result);
+        */
     }
 
     // Record definition (final in Java 16)
