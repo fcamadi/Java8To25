@@ -21,6 +21,7 @@ public class StringTemplates {
         String formatted = "Hello %s, you are %d years old".formatted(name, age);
         System.out.println("Formatted: " + formatted);
 
+        // "... the feature has been removed in JDK 23, pending a redesign"
         // FMT for formatting
         // String aligned = FMT."""
         //     Name:  %-10s\{name}
